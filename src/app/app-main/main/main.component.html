@@ -1,0 +1,11 @@
+<app-nav></app-nav>
+<div class="wrapper">
+    <app-left-menu  (changeMode)="changeMode($event)"></app-left-menu>
+    <app-body 
+    [word]="word"
+    [splitMode]="splitMode"
+    [engRus]="engRus"
+    [words]="words$ | async"
+    >
+    </app-body>
+</div>

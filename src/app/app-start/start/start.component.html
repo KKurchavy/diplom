@@ -1,0 +1,18 @@
+<mat-card class="card-size">
+  <mat-card-title class="title-position">Добро пожаловать в {{ projectName }}</mat-card-title>
+  <mat-card-content class="content">
+    <div class="auth-place" *ngIf="!(isLogged$ | async)">
+      <a class="auth-button" mat-raised-button color="primary" (click)="openAuthDialog()">
+        <span>Войти как студент</span>
+      </a>
+    </div>
+    <div class="auth-place" *ngIf="!(isLogged$ | async)">
+      <a class="auth-button" mat-raised-button color="primary" (click)="openAuthAdminDialog()">
+        <span>Войти как администратор</span>
+      </a>
+    </div>
+    <a class="auth-button" *ngIf="isLogged$ | async" mat-raised-button color="primary" (click)="continue()">
+      <span>Вы уже вошли, нажмите для перехода</span>
+    </a>
+  </mat-card-content>
+</mat-card>

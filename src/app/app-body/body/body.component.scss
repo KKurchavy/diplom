@@ -1,0 +1,70 @@
+@import '../../../../node_modules/dragula/dist/dragula.css';
+
+:host {
+    display: flex;
+    flex-grow: 6;
+}
+.card-size {
+    flex-grow: 6;
+    max-width: 850px;
+    display: flex;
+    flex-direction: column;
+}
+.card-content-size {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.grid {
+    width: 800px;
+    height: 300px;
+}
+.drop-place {
+    background-color: #e8e8e8;
+    min-height: 46px;
+    display: inline-block;
+    margin-bottom: 45px;
+}
+.drag-place {
+    min-height: 46px;
+    text-align: center;
+}
+.drag-place * {
+    background-color: #e8e8e8;
+}
+.button {
+    min-width: 36px;
+    padding: 0 5px;
+    transition-duration: 1s;
+}
+.words {
+    text-align: center;
+    font-size: 18pt;
+}
+.place {
+    min-width: 36px;
+    height: 36px;
+    display: inline-block;
+    background-color: white;
+    vertical-align: top;
+    margin: 5px;
+}
+.empty {
+    background-color: transparent;
+    text-align: center;
+    line-height: 55px;
+}
+.drop-container {
+    text-align: center;
+}
+
+.filter-app {
+    display: flex;
+    &-asc {
+        flex-direction: column;
+    }
+    &-desc {
+        flex-direction: column-reverse;
+    }
+}

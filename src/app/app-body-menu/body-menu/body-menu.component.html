@@ -1,0 +1,6 @@
+<mat-nav-list 
+role="list" 
+*ngFor="let word of words"
+>
+  <a mat-list-item (click)="pickWord(word)">{{ word.eng }}</a>
+</mat-nav-list>
