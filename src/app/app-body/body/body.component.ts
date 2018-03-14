@@ -1,6 +1,6 @@
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MatSnackBar } from '@angular/material';
-import { QueryList, Input, EventEmitter, Output } from '@angular/core';
+import { QueryList, Input, EventEmitter, Output, SimpleChanges } from '@angular/core';
 import { PlaceDirective } from './../place.directive';
 import { CutWord } from './../../data/cut-word';
 import { Word } from './../../data/word.interface';
@@ -30,8 +30,6 @@ export class BodyComponent implements OnInit {
   @Input() words: Word[];
   @Input() splitMode: string;
   @Input() engRus: boolean;
-
-  @Output() sendWord: EventEmitter<Word>;
   
   @ViewChildren(PlaceDirective) private dropableElList: QueryList<PlaceDirective>;
 
@@ -58,23 +56,30 @@ export class BodyComponent implements OnInit {
     });  
   }
 
-  public ngOnChanges() {
-    this.cutWord = this.cutWordToArray(this.word);
-    this.clearWord = this.cleanWord(this.cutWord);
-    this.sortWord = [];
-    setTimeout(() => {
-      this.sortWord = this.sortCutWord(this.clearWord);
-    }); 
+  public ngOnChanges(changes: SimpleChanges): void {
+    const splitMode = changes['splitMode'];
+    
+    if(splitMode) {
+      this.redraw();
+    }
   }
 
   public getWord(item): void {
     this.word = item;
+    this.redraw();
+  }
+
+  private redraw(): void {
     this.cutWord = this.cutWordToArray(this.word);
     this.clearWord = this.cleanWord(this.cutWord);
     this.sortWord = [];
     setTimeout(() => {
       this.sortWord = this.sortCutWord(this.clearWord);
     });  
+  }
+
+  public checkSpecialSymbols(item: string): boolean {
+    return item === ' ' || item === ',' || item === '.' || item === '?';
   }
   
   private onDrag(args) {
@@ -176,7 +181,7 @@ export class BodyComponent implements OnInit {
   }
 
   private cleanWord(cutWord: CutWord): string[] {
-    return cutWord.eng.filter(item => item !== ' ' && item !== ',' && item !== '.' && item !== '?');
+    return cutWord.eng.filter(item => !this.checkSpecialSymbols(item));
   }
 
   private sortCutWord(arr: string[]): string[] {

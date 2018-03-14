@@ -14,11 +14,11 @@
                 <div class="drop-place">
                     <div class="place" 
                     appPlace
-                    [class.empty]="item === ' ' || item === ',' || item === '.' || item === '?'" 
+                    [class.empty]="checkSpecialSymbols(item)" 
                     dragula="first-bag" 
                     *ngFor="let item of cutWord.eng"
                     >
-                    {{(item === ' ' || item === ',' || item === '.' || item === '?') ? item : null }}
+                    {{(checkSpecialSymbols(item)) ? item : null }}
                     </div>
                 </div>
             </div>

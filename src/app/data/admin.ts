@@ -14,10 +14,6 @@ export class Admin extends User {
     }
 
     public checkPassword(): boolean {
-        if(this._passwordAjax != this._password) {
-            return false;
-        }
-        
-        return true;
+        return this._passwordAjax === this._password;
     }
 }

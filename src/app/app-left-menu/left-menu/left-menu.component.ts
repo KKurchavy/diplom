@@ -7,16 +7,16 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./left-menu.component.scss']
 })
 export class LeftMenuComponent {
+
   @Output() changeMode: EventEmitter<string> = new EventEmitter<string>();
 
-  public forChars(): void {
-    console.log("kek");
-    this.changeMode.emit('');
-  }
+  public enum: any = Object.freeze({
+    forChars: '',
+    forWords: ' '
+  });
 
-  public forWords(): void {
-    console.log("kek");
-    this.changeMode.emit(' ');
+  public sendMode(value: string): void {
+    this.changeMode.emit(value);
   }
 
 }
