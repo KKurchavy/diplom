@@ -1,0 +1,28 @@
+<app-nav 
+[getControlMode]="controlMode$ | async" 
+(sendControlMode)="getMode($event)"
+>
+</app-nav>
+<div class="block-size">
+    <app-left-menu></app-left-menu>
+    <mat-card class="card-size">
+      <mat-card-content class="mat-card-content">
+        <mat-list class="list list-left" dragula="second-bag">
+          <div 
+          class="list-item"
+          mat-list-item
+          *ngFor="let item of (words$ | async)"
+          >
+          {{item.eng}}, {{item.rus}}
+        </div>
+        </mat-list>
+
+        <mat-list
+        class="drop-list list list-right" 
+        dragula="second-bag" 
+        role="list"
+        >
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+</div>

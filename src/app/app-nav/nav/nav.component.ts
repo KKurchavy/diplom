@@ -29,4 +29,7 @@ export class NavComponent {
     this.router.navigate(['/']);
     this.service.logout();
   }
+  public goToAdmin(): void {
+    this.router.navigate(['/admin']);
+  }
 }

@@ -86,6 +86,7 @@ export class BodyComponent implements OnInit {
   
   private onDrag(args) {
     let [e, el] = args;
+    console.log('asdasdasd');
     
     Array.from(el.children).forEach((v, i) => {
       if(e == v) {

@@ -1,0 +1,36 @@
+@import '../../../../../node_modules/dragula/dist/dragula.css';
+
+.block-size {
+    display: flex;
+}
+.card-size {
+    display: flex;
+    flex-grow: 6;
+}
+.mat-card-content {
+    width: 100%;
+}
+.drag-list {    
+    width: 50%;
+    background-color: gray;
+    min-height: 100px;
+}
+.drop-list {
+    background-color: gray;
+}
+.list-item {
+    cursor: pointer;
+    height: 50px;
+}
+.list {
+    display: inline-block;
+    width: 50%;
+    min-height: 100px;
+
+    &-right {
+        float: right;
+    }
+    &-left {
+        float: left;
+    }
+}

@@ -1,3 +1,5 @@
+import { AdminComponent } from './../admin/app-admin/admin/admin.component';
+import { AppAdminModule } from './../admin/app-admin/app-admin.module';
 import { StartComponent } from './../app-start/start/start.component';
 import { AppStartModule } from './../app-start/app-start.module';
 import { AppTestModule } from './../app-test/app-test.module';
@@ -11,7 +13,8 @@ import { CommonModule } from '@angular/common';
 const routes: Routes = [
   { path: '', component: StartComponent },
   { path: 'dashboard', component: MainComponent },
-  { path: 'test', component: TestComponent }
+  { path: 'test', component: TestComponent },
+  { path: 'admin', component: AdminComponent }
 ];
 
 @NgModule({
@@ -20,6 +23,7 @@ const routes: Routes = [
     AppMainModule,
     AppTestModule,
     AppStartModule,
+    AppAdminModule,
     RouterModule.forRoot(routes)
   ],
   exports: [RouterModule]
