@@ -1,6 +1,6 @@
 <mat-toolbar class="app-toolbar" color="primary">
-    <a mat-button>Обучающий режим</a>
-    <a mat-button>Ружим контроля</a>
+    <a mat-button (click)="changeMode(false)">Обучающий режим</a>
+    <a mat-button (click)="changeMode(true)">Ружим контроля</a>
     <a *ngIf="isAdmin$ | async" mat-button>Админ панель</a>
     <div class="flex-spacer"></div>
     <a mat-button (click)="exit()">

@@ -19,8 +19,8 @@ export class AppService {
     { eng: 'tiny', rus: 'крошечный' },
     { eng: 'hot', rus: 'горячий' },
     { eng: 'favourite', rus: 'любимый' },
-    { eng: 'foo,bar', rus: 'фу,бар' },
-    { eng: 'Looking for the meanings of words', rus: 'Ищете значения слов' }
+    { eng: 'foo, bar', rus: 'фу, бар' },
+    { eng: 'Looking for the, meanings of words', rus: 'Ищете значения слов' }
   ]);
 
   constructor() {

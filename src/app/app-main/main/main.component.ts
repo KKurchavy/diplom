@@ -16,6 +16,7 @@ export class MainComponent implements OnInit {
   public word: Word;
   public words$: Observable<Word[]>;
   public engRus: boolean;
+  public controlMode$: Observable<boolean>;
 
   constructor(private service: AppService) { }
 
@@ -31,14 +32,19 @@ export class MainComponent implements OnInit {
     });
 
     this.words$ = this.service.words;
+    this.controlMode$ = this.service.controlMode;
     
     this.service.isEngRus
     .subscribe(data => this.engRus = data);
   }
 
-  public changeMode(value): void {
+  public changeTraining(value): void {
     this.service.setSplitMode(value);
     this.splitMode = value;
+  }
+
+  public getMode(value): void {
+    this.service.setControlMode(value);
   }
 
 }

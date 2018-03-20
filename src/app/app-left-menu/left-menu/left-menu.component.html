@@ -1,4 +1,3 @@
 <mat-nav-list role="list">
-  <a mat-list-item (click)="sendMode(enum.forChars)">По буквам</a>
-  <a mat-list-item (click)="sendMode(enum.forWords)">По словам</a>
+  <a mat-list-item *ngFor="let item of mods" (click)="sendMode(item.f)">{{item.name}}</a>
 </mat-nav-list>

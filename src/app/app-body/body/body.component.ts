@@ -30,6 +30,7 @@ export class BodyComponent implements OnInit {
   @Input() words: Word[];
   @Input() splitMode: string;
   @Input() engRus: boolean;
+  @Input() controlMode: boolean;
   
   @ViewChildren(PlaceDirective) private dropableElList: QueryList<PlaceDirective>;
 
@@ -58,8 +59,9 @@ export class BodyComponent implements OnInit {
 
   public ngOnChanges(changes: SimpleChanges): void {
     const splitMode = changes['splitMode'];
+    const controlMode = changes['controlMode'];
     
-    if(splitMode) {
+    if(splitMode || controlMode) {
       this.redraw();
     }
   }
@@ -105,7 +107,7 @@ export class BodyComponent implements OnInit {
     }
 
     if(qlEl) {
-      if(!this.checkResult(el)) {
+      if(!this.checkResult(el) && this.controlMode) {
         this.renderer.setStyle(e, 'background-color', 'red');
 
         setTimeout(() => {

@@ -29,9 +29,9 @@
 .drag-place {
     min-height: 46px;
     text-align: center;
-}
-.drag-place * {
-    background-color: #e8e8e8;
+    * {
+        background-color: #e8e8e8;
+    }
 }
 .button {
     min-width: 36px;
@@ -40,7 +40,7 @@
 }
 .words {
     text-align: center;
-    font-size: 18pt;
+    font-size: 30pt;
 }
 .place {
     min-width: 36px;

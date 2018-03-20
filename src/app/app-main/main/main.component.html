@@ -1,11 +1,16 @@
-<app-nav></app-nav>
+<app-nav 
+[getControlMode]="controlMode$ | async" 
+(sendControlMode)="getMode($event)"
+>
+</app-nav>
 <div class="wrapper">
-    <app-left-menu  (changeMode)="changeMode($event)"></app-left-menu>
+    <app-left-menu  (changeMode)="changeTraining($event)"></app-left-menu>
     <app-body 
     [word]="word"
     [splitMode]="splitMode"
     [engRus]="engRus"
     [words]="words$ | async"
+    [controlMode]="controlMode$ | async"
     >
     </app-body>
 </div>
