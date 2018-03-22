@@ -13,7 +13,7 @@ import { Component, OnInit } from '@angular/core';
 export class MainComponent implements OnInit {
 
   public splitMode: string;
-  public word: Word;
+  public word$: Observable<Word>;
   public words$: Observable<Word[]>;
   public engRus: boolean;
   public controlMode$: Observable<boolean>;
@@ -24,14 +24,14 @@ export class MainComponent implements OnInit {
     this.service.splitMode
     .subscribe(data => this.splitMode = data);
 
-    this.service.words
-    .switchMap(data => from(data))
-    .take(1)
-    .subscribe(word => {
-      this.word = word;
-    });
-
     this.words$ = this.service.words;
+
+    this.word$ = this.words$
+    .switchMap(data => {
+      return from(data);
+    })
+    .take(1);
+
     this.controlMode$ = this.service.controlMode;
     
     this.service.isEngRus

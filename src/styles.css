@@ -4,3 +4,11 @@
     margin: 0;
     padding: 0;
 }
+
+.active {
+    background-color: #00BCD4;
+}
+
+.flex-spacer {
+    flex: 1 1 auto;
+}

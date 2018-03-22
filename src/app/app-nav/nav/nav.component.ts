@@ -32,4 +32,7 @@ export class NavComponent {
   public goToAdmin(): void {
     this.router.navigate(['/admin']);
   }
+  public goToDashboard(): void {
+    this.router.navigate(['/dashboard']);
+  }
 }

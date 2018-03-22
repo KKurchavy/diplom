@@ -48,22 +48,21 @@ export class BodyComponent implements OnInit {
     this.dragulaService.drag.subscribe((value) => {
       this.onDrag(value.slice(1));
     });
-
-    this.cutWord = this.cutWordToArray(this.word);
-    this.clearWord = this.cleanWord(this.cutWord);
-    this.sortWord = [];
-    setTimeout(() => {
-      this.sortWord = this.sortCutWord(this.clearWord);
-    });  
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
     const splitMode = changes['splitMode'];
     const controlMode = changes['controlMode'];
-    
-    if(splitMode || controlMode) {
+    const word = changes['word'];
+
+    if ((splitMode || controlMode) && this.word) {
       this.redraw();
     }
+    if(word && word.currentValue) {
+      this.redraw();
+    }
+
+
   }
 
   public getWord(item): void {
@@ -86,7 +85,6 @@ export class BodyComponent implements OnInit {
   
   private onDrag(args) {
     let [e, el] = args;
-    console.log('asdasdasd');
     
     Array.from(el.children).forEach((v, i) => {
       if(e == v) {
@@ -174,12 +172,12 @@ export class BodyComponent implements OnInit {
     return false;
   }
 
-  private cutWordToArray(word: Word): CutWord {
-    const [eng, rus] = Object.values(word).map(item => item.split(this.splitMode));
+  private cutWordToArray(item: Word): CutWord {
+    const [, word, translation] = Object.values(item).map(item => item.split(this.splitMode));
 
     return {
-      eng,
-      rus
+      eng: word,
+      rus: translation
     }
   }
 

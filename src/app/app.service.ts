@@ -1,9 +1,14 @@
+import { WordResponse } from './data/word-response';
+import { from } from 'rxjs/observable/from';
+import { HttpClient } from '@angular/common/http';
 import { Word } from './data/word.interface';
 import { Observable } from 'rxjs/Observable';
 import { Student } from './data/student';
 import { Admin } from './data/admin';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class AppService {
@@ -15,15 +20,17 @@ export class AppService {
   private _controlMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);//false - education, true - control
   private _splitMode: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
-  private _words: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([
-    { eng: 'tiny', rus: 'крошечный' },
-    { eng: 'hot', rus: 'горячий' },
-    { eng: 'favourite', rus: 'любимый' },
-    { eng: 'foo, bar', rus: 'фу, бар' },
-    { eng: 'Looking for the, meanings of words', rus: 'Ищете значения слов' }
-  ]);
+  //private _words: BehaviorSubject<any[]>; = new BehaviorSubject<any[]>([
+  //   { eng: 'tiny', rus: 'крошечный' },
+  //   { eng: 'hot', rus: 'горячий' },
+  //   { eng: 'favourite', rus: 'любимый' },
+  //   { eng: 'foo, bar', rus: 'фу, бар' },
+  //   { eng: 'Looking for the, meanings of words', rus: 'Ищете значения слов' }
+  //]);
 
-  constructor() {
+  constructor(
+    private http: HttpClient
+  ) {
 
   }
 
@@ -36,11 +43,12 @@ export class AppService {
   get isEngRus(): Observable<boolean> {
     return this._isEngRus.asObservable();
   }
-  get user() {
+  get user(): any {
     return this._user;
   }
   get words(): Observable<Word[]> {
-    return this._words.asObservable();
+    return this.http.get<WordResponse>('http://localhost:3000/words')
+              .map(({words}) => words);
   }
   get splitMode(): Observable<string> {
     return this._splitMode.asObservable();

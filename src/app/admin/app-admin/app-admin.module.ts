@@ -1,3 +1,4 @@
+import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { DragulaModule, DragulaService } from 'ng2-dragula';
 import { AdminListModule } from './../admin-list/admin-list.module';
@@ -9,6 +10,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminComponent } from './admin/admin.component';
 import { MatListModule } from '@angular/material/list';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -19,7 +21,9 @@ import { MatListModule } from '@angular/material/list';
     AdminListModule,
     MatListModule,
     DragulaModule,
-    MatButtonModule
+    MatButtonModule,
+    MatInputModule,
+    ReactiveFormsModule
   ],
   providers: [AppAdminService, DragulaService],
   declarations: [AdminComponent],

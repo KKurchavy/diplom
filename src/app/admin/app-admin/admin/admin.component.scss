@@ -3,34 +3,58 @@
 .block-size {
     display: flex;
 }
-.card-size {
-    display: flex;
+.card {
     flex-grow: 6;
+    overflow-y: auto;
 }
 .mat-card-content {
     width: 100%;
-}
-.drag-list {    
-    width: 50%;
-    background-color: gray;
-    min-height: 100px;
-}
-.drop-list {
-    background-color: gray;
-}
-.list-item {
-    cursor: pointer;
-    height: 50px;
+    display: flex;
 }
 .list {
     display: inline-block;
-    width: 50%;
+    width: 49%;
     min-height: 100px;
+    border: 1px solid #BDBDBD;
+    padding: 0;
 
     &-right {
         float: right;
     }
     &-left {
         float: left;
+    }
+}
+.footer {
+    display: flex;
+    padding: 10px 20px;
+}
+.word-field {
+    width: 35%;
+}
+.popup-block {
+    text-align: center;
+}
+.remove-block {
+    height: 50px;
+    background-color: #BDBDBD;
+    line-height: 50px;
+    width: 50%;
+    margin: 0 auto;
+    border: 2px dotted black;
+    color: white;
+    overflow: hidden;
+}
+.list-item {
+    cursor: pointer;
+    min-height: 50px;
+    line-height: 50px;
+    background-color: #C5CAE9;
+    border: 1px solid white;
+    width: 100%;
+
+    &-text {
+        padding: 0 10px;
+        color: #212121;
     }
 }

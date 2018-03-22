@@ -5,24 +5,51 @@
 </app-nav>
 <div class="block-size">
     <app-left-menu></app-left-menu>
-    <mat-card class="card-size">
-      <mat-card-content class="mat-card-content">
-        <mat-list class="list list-left" dragula="second-bag">
-          <div 
-          class="list-item"
-          mat-list-item
-          *ngFor="let item of (words$ | async)"
-          >
-          {{item.eng}}, {{item.rus}}
+    
+    <mat-card class="card">
+      <mat-card-title>
+        <div>
+            <button mat-button (click)="addWord()">Добавить элемент</button>
+            <button mat-button (click)="removeWord()">Удалить элемент</button>
         </div>
-        </mat-list>
-
-        <mat-list
-        class="drop-list list list-right" 
-        dragula="second-bag" 
-        role="list"
-        >
-        </mat-list>
-      </mat-card-content>
+        <div class="popup-block" [formGroup]="fg" *ngIf="addWordFlag">
+          <mat-form-field class="word-field">
+            <input matInput formControlName="word" placeholder="Введите текст на английском">
+          </mat-form-field>
+          <mat-form-field class="word-field">
+            <input matInput formControlName="translation" placeholder="Введите текст на русском">
+          </mat-form-field>
+          <button mat-raised-button color="primary" (click)="submitNewWord()">Подтвердить</button>
+        </div>
+        <div class="popup-block" *ngIf="removeWordFlag">
+          <div #removeBlock class="remove-block" dragula="second-bag">Перетащите сюда, чтобы удалить слово</div>
+        </div>
+      </mat-card-title>
+      <mat-card-content>
+        <div class="mat-card-content">
+            <mat-list 
+            class="list list-left"
+            dragula="second-bag"
+            [dragulaOptions]="{ revertOnSpill: true }"
+            >
+              <button class="list-item" mat-list-item *ngFor="let item of words" value="{{item.id}}">
+                <p class="list-item-text">{{item.word}} | {{item.translation}}</p>
+              </button>
+            </mat-list>
+    
+            <mat-list
+            #droppable
+            class="list list-right" 
+            dragula="second-bag" 
+            [dragulaOptions]="{ revertOnSpill: true }"
+            role="list"
+            >
+            </mat-list>
+          </div>
+        </mat-card-content>
+      <mat-card-footer class="footer">
+        <div class="flex-spacer"></div>
+        <button mat-raised-button color="primary" (click)="save()">Сохранить</button>
+      </mat-card-footer>
     </mat-card>
 </div>

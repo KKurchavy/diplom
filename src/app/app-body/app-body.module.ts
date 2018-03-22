@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BodyComponent } from './body/body.component';
 import { MatCardModule } from '@angular/material/card';
-import { DragulaModule } from 'ng2-dragula'
+import { DragulaModule, DragulaService } from 'ng2-dragula'
 import { MatButtonModule } from '@angular/material';
 import { PlaceDirective } from './place.directive';
 
@@ -18,6 +18,7 @@ import { PlaceDirective } from './place.directive';
     AppLanguageModeModule
   ],
   declarations: [BodyComponent, PlaceDirective],
+  providers: [DragulaService],
   exports: [BodyComponent]
 })
 export class AppBodyModule { }

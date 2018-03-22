@@ -6,7 +6,7 @@
 <div class="wrapper">
     <app-left-menu  (changeMode)="changeTraining($event)"></app-left-menu>
     <app-body 
-    [word]="word"
+    [word]="word$ | async"
     [splitMode]="splitMode"
     [engRus]="engRus"
     [words]="words$ | async"

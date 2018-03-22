@@ -4,8 +4,8 @@
     </mat-card-content>
     <mat-card-content class="card-content-size">
         <div class="words">
-            <div *ngIf="engRus">{{ word.eng }}</div>
-            <div>{{ word.rus }}</div>
+            <div *ngIf="engRus">{{ word?.word }}</div>
+            <div>{{ word?.translation }}</div>
         </div>
     </mat-card-content>
     <mat-card-content class="card-content-size">
@@ -16,7 +16,7 @@
                     appPlace
                     [class.empty]="checkSpecialSymbols(item)" 
                     dragula="first-bag" 
-                    *ngFor="let item of cutWord.eng"
+                    *ngFor="let item of cutWord?.eng"
                     >
                     {{(checkSpecialSymbols(item)) ? item : null }}
                     </div>
