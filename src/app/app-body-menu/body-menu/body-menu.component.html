@@ -1,6 +1,6 @@
 <mat-nav-list 
 role="list" 
-*ngFor="let word of words"
+*ngFor="let word of words; let i = index"
 >
-  <a mat-list-item (click)="pickWord(word)">{{ word.translation }}</a>
+  <a mat-list-item [class.not-active]="word.done === true" (click)="pickWord(word)">{{ word.translation }}</a>
 </mat-nav-list>

@@ -12,3 +12,11 @@
 .flex-spacer {
     flex: 1 1 auto;
 }
+
+.not-active {
+    pointer-events: none;
+    cursor: default;
+    text-decoration:none;
+    color:black;
+    background-color: #BDBDBD;
+}

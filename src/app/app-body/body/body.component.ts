@@ -26,11 +26,15 @@ export class BodyComponent implements OnInit {
   private swapIdx: number;
   private clearWord: string[];
 
+  private errors: number = 0;
+
   @Input() word: Word;
   @Input() words: Word[];
   @Input() splitMode: string;
   @Input() engRus: boolean;
   @Input() controlMode: boolean;
+
+  @Output() sendStat: EventEmitter<any[]> = new EventEmitter<any[]>();
   
   @ViewChildren(PlaceDirective) private dropableElList: QueryList<PlaceDirective>;
 
@@ -48,12 +52,14 @@ export class BodyComponent implements OnInit {
     this.dragulaService.drag.subscribe((value) => {
       this.onDrag(value.slice(1));
     });
+
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
     const splitMode = changes['splitMode'];
     const controlMode = changes['controlMode'];
     const word = changes['word'];
+    const words = changes['words'];
 
     if ((splitMode || controlMode) && this.word) {
       this.redraw();
@@ -61,11 +67,16 @@ export class BodyComponent implements OnInit {
     if(word && word.currentValue) {
       this.redraw();
     }
+    if(words && !words.firstChange) {
+      this.words.forEach((v) => {
+        v.done = false;
+      });
+    }
 
 
   }
 
-  public getWord(item): void {
+  public getWord(item: any): void {
     this.word = item;
     this.redraw();
   }
@@ -133,12 +144,8 @@ export class BodyComponent implements OnInit {
 
     this.dropableElList.forEach(({ element: { nativeElement } }) => {
       if(!nativeElement.classList.contains('empty')) {
-
-        if(nativeElement.children.length > 0) {
-          arr.push(nativeElement.children[0].value);
-        } else {
-          arr.push('_');
-        }
+        const item = nativeElement.children.length > 0 ? nativeElement.children[0].value : '_';
+        arr.push(item);
       }
 
     });
@@ -149,6 +156,11 @@ export class BodyComponent implements OnInit {
         this.snackBar.open('Правильно', 'Ок', {
           duration: 3000
         });
+        
+        this.words.find((v, i) => v == this.word).done = true;
+        this.words = [...this.words];
+        console.log(this.words);
+        this.redraw();
       }
 
       return true;
@@ -173,7 +185,12 @@ export class BodyComponent implements OnInit {
   }
 
   private cutWordToArray(item: Word): CutWord {
-    const [, word, translation] = Object.values(item).map(item => item.split(this.splitMode));
+    const [, word, translation, ] = Object.values(item).map(item => {
+     if(typeof item != 'boolean') {
+      return item.split(this.splitMode);
+     } 
+     return item;
+    });
 
     return {
       eng: word,

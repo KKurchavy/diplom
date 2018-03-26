@@ -1,6 +1,7 @@
 <app-nav 
 [getControlMode]="controlMode$ | async" 
 (sendControlMode)="getMode($event)"
+[inAdminPanel]="true"
 >
 </app-nav>
 <div class="block-size">
@@ -26,7 +27,7 @@
         </div>
       </mat-card-title>
       <mat-card-content>
-        <div class="mat-card-content">
+        <span class="lists-place">
             <mat-list 
             class="list list-left"
             dragula="second-bag"
@@ -44,12 +45,11 @@
             [dragulaOptions]="{ revertOnSpill: true }"
             role="list"
             >
+              <button class="list-item" mat-list-item *ngFor="let item of controlWords" value="{{item.id}}">
+                <p class="list-item-text">{{item.word}} | {{item.translation}}</p>
+              </button>
             </mat-list>
-          </div>
+          </span>
         </mat-card-content>
-      <mat-card-footer class="footer">
-        <div class="flex-spacer"></div>
-        <button mat-raised-button color="primary" (click)="save()">Сохранить</button>
-      </mat-card-footer>
     </mat-card>
 </div>

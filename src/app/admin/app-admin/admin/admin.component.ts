@@ -1,3 +1,4 @@
+import { AppService } from './../../../app.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
 import { DragulaService } from 'ng2-dragula';
@@ -17,19 +18,22 @@ export class AdminComponent implements OnInit {
   
   public controlMode$: Observable<boolean>;
   public words: Word[];
+  public controlWords: Word[];
 
   public addWordFlag: boolean = false;
   public removeWordFlag: boolean = false;
 
   public fg: FormGroup = new FormGroup({
-    word: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z]+')]),
-    translation: new FormControl('', [Validators.required, Validators.pattern('[а-яА-Я]+')])
+    word: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]+')]),
+    translation: new FormControl('', [Validators.required, Validators.pattern('[а-яА-Я ]+')])
   });
 
   @ViewChild("removeBlock", { read: ElementRef }) removeBlock: ElementRef;
+  @ViewChild("droppable", {read: ElementRef}) droppableList: ElementRef;
 
   constructor(
     private adminService: AppAdminService,
+    private service: AppService,
     private dragulaService: DragulaService,
     private renderer: Renderer2
   ) { }
@@ -37,9 +41,11 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
     this.controlMode$ = this.adminService.controlMode;
     this.words$ = this.adminService.words;
-
+    
     this.words$
     .subscribe(data => this.words = data);
+    this.service.controlWords
+    .subscribe(data => this.controlWords = data);
 
     this.dragulaService.drop.subscribe((value) => {
       this.onDrop(value.slice(1));
@@ -64,13 +70,17 @@ export class AdminComponent implements OnInit {
   public submitNewWord(): void {
     const eng = this.fg.get('word');
     const rus = this.fg.get('translation');
+    this.service.changeLoadingWindowState(true);
 
     if(eng.valid && rus.valid) {
       this.adminService.addWord({
         word: eng.value,
         translation: rus.value
       })
-      .subscribe(data => console.log(data));
+      .subscribe(data => {
+        console.log(data);
+        this.service.changeLoadingWindowState(false);
+      });
     }
 
     
@@ -87,13 +97,38 @@ export class AdminComponent implements OnInit {
   private onDrop(args): void {
     const [e, el, container, prevEl] = args;
     
+    if(this.droppableList && (el == this.droppableList.nativeElement)) {
+      this.service.changeLoadingWindowState(true);
 
-    if(this.removeBlock && (el === this.removeBlock.nativeElement)) {
-      this.adminService.removeWord(e.value)
+      this.adminService.getWord(e.value)
+      .switchMap(word => {
+        return this.adminService.addControlWord(word)
+      })
       .subscribe(data => {
         console.log(data);
-        this.renderer.removeChild(el, e);
+        this.service.changeLoadingWindowState(false);
       });
+    }
+
+    if(this.removeBlock && (el === this.removeBlock.nativeElement)) {
+      this.service.changeLoadingWindowState(true);
+
+      if(container === this.droppableList.nativeElement) {
+        this.adminService.removeControlWord(e.value)
+        .subscribe(data => {
+          console.log(data);
+          this.service.changeLoadingWindowState(false);
+          this.renderer.removeChild(el, e);
+        });
+      } else {
+        this.adminService.removeWord(e.value)
+        .subscribe(data => {
+          console.log(data);
+          this.service.changeLoadingWindowState(false);
+          this.renderer.removeChild(el, e);
+        });
+      }
+      
       
     }
   }

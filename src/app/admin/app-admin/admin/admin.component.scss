@@ -7,13 +7,12 @@
     flex-grow: 6;
     overflow-y: auto;
 }
-.mat-card-content {
-    width: 100%;
+.lists-place {
     display: flex;
 }
 .list {
-    display: inline-block;
-    width: 49%;
+    justify-content: center;
+    width: 40%;
     min-height: 100px;
     border: 1px solid #BDBDBD;
     padding: 0;
@@ -24,10 +23,6 @@
     &-left {
         float: left;
     }
-}
-.footer {
-    display: flex;
-    padding: 10px 20px;
 }
 .word-field {
     width: 35%;

@@ -24,7 +24,7 @@ export class MainComponent implements OnInit {
     this.service.splitMode
     .subscribe(data => this.splitMode = data);
 
-    this.words$ = this.service.words;
+    this.words$ = this.service.controlWords;
 
     this.word$ = this.words$
     .switchMap(data => {

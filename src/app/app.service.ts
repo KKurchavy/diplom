@@ -1,6 +1,7 @@
+import { JWTResponse } from './data/JWTResponse.interface';
 import { WordResponse } from './data/word-response';
 import { from } from 'rxjs/observable/from';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Word } from './data/word.interface';
 import { Observable } from 'rxjs/Observable';
 import { Student } from './data/student';
@@ -13,12 +14,16 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class AppService {
 
+  private url: string = "http://localhost:3130";
+
   private _isLogged: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private _user: any;
+  private _user: Student | Admin;
   private _isAdmin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private _isEngRus: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   private _controlMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);//false - education, true - control
   private _splitMode: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  private _loadingWindow: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
 
   //private _words: BehaviorSubject<any[]>; = new BehaviorSubject<any[]>([
   //   { eng: 'tiny', rus: 'крошечный' },
@@ -46,9 +51,12 @@ export class AppService {
   get user(): any {
     return this._user;
   }
-  get words(): Observable<Word[]> {
-    return this.http.get<WordResponse>('http://localhost:3000/words')
-              .map(({words}) => words);
+  get loadingWindow(): Observable<boolean> {
+    return this._loadingWindow.asObservable();
+  }
+  get controlWords(): Observable<Word[]> {
+    return this.http.get<WordResponse>(`${this.url}/controlwords`)
+              .map(({words}) => words.map((item) => ({...item, done: false})));
   }
   get splitMode(): Observable<string> {
     return this._splitMode.asObservable();
@@ -58,31 +66,49 @@ export class AppService {
     return this._controlMode.asObservable();
   }
 
-  setEngRus(value: boolean) {
+  public changeLoadingWindowState(value: boolean): void {
+    this._loadingWindow.next(value);
+  }
+  public setEngRus(value: boolean) {
     this._isEngRus.next(value);
   }
 
-  setControlMode(value: boolean) {
+  public setControlMode(value: boolean) {
     this._controlMode.next(value);
   }
 
-  setSplitMode(value: string) {
+  public setSplitMode(value: string) {
     this._splitMode.next(value);
   }
 
-  login(user: Student) {
+  public login(user: Student) {
     this._user = user;
     this._isLogged.next(true);
   }
 
-  loginAdmin(user: Admin) {
+  public loginAdmin(user: Admin): Observable<any> {
     this._user = user;
     this._isLogged.next(true);
     this._isAdmin.next(true);
+
+    return this.http.post(`${this.url}/login`, {
+      username: 'admin@admin.com',//`${user.firstName}_${user.lastName}`,
+      password: 'admin'//user.password
+    })
+    // .switchMap((data: JWTResponse) => {
+    //   console.log(data);
+    //   localStorage.setItem('access_token', data.token);
+    //   return this.http.get(`${this.url}/admin/hello`);
+    // });
   }
 
-  logout() {
+  public logout() {
     this._isLogged.next(false);
     this._isAdmin.next(false);
+  }
+
+  public loadSettings() {
+    this.http.get(`${this.url}/settings`)
+    .subscribe(settings => console.log(settings));
   }
 }

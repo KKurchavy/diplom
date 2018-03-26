@@ -33,8 +33,10 @@ export class StartComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.service.login(result);
-      this.router.navigate(['/dashboard']);
+      if(result) {
+        this.service.login(result);
+        this.router.navigate(['/dashboard']);
+      }
     });
   }
   public openAuthAdminDialog(): void {
@@ -43,15 +45,23 @@ export class StartComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      const admin = new Admin(result.firstName, result.lastName, result.password);
+      if(result) {
+        const admin = new Admin(result.firstName, result.lastName, result.password);
 
-      if(admin.checkPassword()) {
-        this.service.loginAdmin(admin);
-        this.router.navigate(['/dashboard']);
-      } else {
-        this.snackBar.open('Неправильный пароль', 'Ок', {
-          duration: 3000
-        });
+        if(admin.checkPassword()) {
+          this.service.changeLoadingWindowState(true);
+
+          this.service.loginAdmin(admin)
+          .subscribe(data => {
+            console.log(data);
+            this.router.navigate(['/dashboard']);
+            this.service.changeLoadingWindowState(false);
+          });
+        } else {
+          this.snackBar.open('Неправильный пароль', 'Ок', {
+            duration: 3000
+          });
+        }
       }
     });
   }

@@ -19,7 +19,7 @@ export class AuthAdminComponent implements OnInit {
     this.authForm = this.fb.group({
       firstName: 'Ян',
       lastName: 'Кошелев',
-      password: '45kek'
+      password: 'admin'
     })
   }
 

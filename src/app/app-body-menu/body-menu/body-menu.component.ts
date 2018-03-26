@@ -1,7 +1,7 @@
 import { Word } from './../../data/word.interface';
 import { Observable } from 'rxjs/Observable';
 import { AppService } from './../../app.service';
-import { Component, Output, EventEmitter, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Output, EventEmitter, Input, ChangeDetectionStrategy, SimpleChange } from '@angular/core';
 
 @Component({
   selector: 'app-body-menu',
@@ -10,8 +10,7 @@ import { Component, Output, EventEmitter, Input, ChangeDetectionStrategy } from 
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BodyMenuComponent {
-
-  @Output() getWord: EventEmitter<Word> = new EventEmitter<Word>();
+  @Output() getWord: EventEmitter<any> = new EventEmitter<any>();
 
   @Input() public words: Word[] = [];
 

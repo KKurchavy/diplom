@@ -13,6 +13,7 @@ export class NavComponent {
   public isAdmin$ = this.service.isAdmin;
   
   @Input() getControlMode: boolean;
+  @Input() inAdminPanel: boolean = false;
 
   @Output() sendControlMode: EventEmitter<boolean> = new EventEmitter<boolean>(this.getControlMode);
 
