@@ -17,7 +17,6 @@ export class LeftMenuComponent {
 
   public sendMode(value: string): void {
     this.changeMode.emit(value);
-    
   }
 
 }

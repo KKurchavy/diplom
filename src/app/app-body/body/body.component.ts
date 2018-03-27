@@ -34,7 +34,9 @@ export class BodyComponent implements OnInit {
   @Input() engRus: boolean;
   @Input() controlMode: boolean;
 
-  @Output() sendStat: EventEmitter<any[]> = new EventEmitter<any[]>();
+  @Output() private sendStat: EventEmitter<any[]> = new EventEmitter<any[]>();
+  @Output() private allWordsDone: EventEmitter<boolean> = new EventEmitter<boolean>(false);
+  @Output() private resultErrors: EventEmitter<number> = new EventEmitter<number>();
   
   @ViewChildren(PlaceDirective) private dropableElList: QueryList<PlaceDirective>;
 
@@ -119,6 +121,7 @@ export class BodyComponent implements OnInit {
     if(qlEl) {
       if(!this.checkResult(el) && this.controlMode) {
         this.renderer.setStyle(e, 'background-color', 'red');
+        this.errors++;
 
         setTimeout(() => {
           this.renderer.removeStyle(e, 'background-color');
@@ -156,10 +159,14 @@ export class BodyComponent implements OnInit {
         this.snackBar.open('Правильно', 'Ок', {
           duration: 3000
         });
-        
-        this.words.find((v, i) => v == this.word).done = true;
+
+        this.words.find((v, i) => {
+          return v.word === this.word.word;
+        }).done = true;
+
         this.words = [...this.words];
-        console.log(this.words);
+        this.word = this.words[this.searchNotDoneWord(this.words)];
+
         this.redraw();
       }
 
@@ -167,6 +174,27 @@ export class BodyComponent implements OnInit {
     }
 
     return false;
+  }
+
+  private searchNotDoneWord(words: Word[]): number {
+    let idx;
+    const item = words.find((v, i) => {
+      idx = i;
+      return v.done === false;
+    });
+
+    if(item) {
+      return idx;
+    } else {
+      this.sendResults();
+      return 0;
+    }
+  }
+
+  private sendResults(): void {
+    this.allWordsDone.emit(true);
+    this.resultErrors.emit(this.errors);
+
   }
 
   private equal(arr1, arr2): boolean {

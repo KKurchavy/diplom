@@ -22,8 +22,20 @@ export class AppAdminService {
             .map(({ words }) => words);
   }
 
+  get settings(): Observable<any> {
+    return this.http.get('http://localhost:3130/settings');
+  }
+
   public setControlMode(value: boolean) {
     this._controlMode.next(value);
+  }
+
+  public sendSettings(key: string, value: any): Observable<any> {
+    return this.settings
+      .switchMap(data => {
+        data[key] = value;
+        return this.http.put('http://localhost:3130/settings', data);
+      });
   }
 
   public addWord(word: Word): Observable<any> {

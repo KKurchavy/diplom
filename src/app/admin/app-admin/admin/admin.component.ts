@@ -56,11 +56,33 @@ export class AdminComponent implements OnInit {
   }
 
   public getMode(value): void {
+    this.service.changeLoadingWindowState(true);
+    this.adminService.sendSettings('controlMode', value)
+    .subscribe(data => {
+        console.log(data);
+        this.service.changeLoadingWindowState(false);
+      });
     this.adminService.setControlMode(value);
   }
 
-  public save(): void {
-    console.log('save');
+  public getLang(value): void {
+    this.service.changeLoadingWindowState(true);
+    this.adminService.sendSettings('engRus', value)
+    .subscribe(data => {
+        console.log(data);
+        this.service.changeLoadingWindowState(false);
+      });
+    this.adminService.setControlMode(value);
+  }
+
+  public getSplit(value): void {
+    this.service.changeLoadingWindowState(true);
+    this.adminService.sendSettings('splitMode', value)
+    .subscribe(data => {
+        console.log(data);
+        this.service.changeLoadingWindowState(false);
+      });
+    this.service.setControlMode(value);
   }
 
   public addWord(): void {

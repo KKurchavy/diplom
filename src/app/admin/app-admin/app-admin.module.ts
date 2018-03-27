@@ -1,3 +1,4 @@
+import { AppLanguageModeModule } from './../../app-language-mode/app-language-mode.module';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { DragulaModule, DragulaService } from 'ng2-dragula';
@@ -23,7 +24,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     DragulaModule,
     MatButtonModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AppLanguageModeModule
   ],
   providers: [AppAdminService, DragulaService],
   declarations: [AdminComponent],

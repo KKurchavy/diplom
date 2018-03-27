@@ -1,3 +1,4 @@
+import { AppCongradilationsModule } from './../app-congradilations/app-congradilations.module';
 import { AppNavModule } from './../app-nav/app-nav.module';
 import { AppBodyModule } from './../app-body/app-body.module';
 import { AppLeftMenuModule } from './../app-left-menu/app-left-menu.module';
@@ -11,7 +12,8 @@ import { MainComponent } from './main/main.component';
     CommonModule,
     AppLeftMenuModule,
     AppBodyModule,
-    AppNavModule
+    AppNavModule,
+    AppCongradilationsModule
   ],
   declarations: [MainComponent],
   exports: [MainComponent]

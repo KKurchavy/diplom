@@ -5,9 +5,10 @@
 >
 </app-nav>
 <div class="block-size">
-    <app-left-menu></app-left-menu>
+    <app-left-menu (changeMode)="getSplit($event)"></app-left-menu>
     
     <mat-card class="card">
+      <app-language-mode (changeLanguage)="getLang($event)"></app-language-mode>
       <mat-card-title>
         <div>
             <button mat-button (click)="addWord()">Добавить элемент</button>

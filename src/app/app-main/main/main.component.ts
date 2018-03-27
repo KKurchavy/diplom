@@ -17,6 +17,9 @@ export class MainComponent implements OnInit {
   public words$: Observable<Word[]>;
   public engRus: boolean;
   public controlMode$: Observable<boolean>;
+  
+  public wordsDone: boolean = false;
+  public errors: number = 0;
 
   constructor(private service: AppService) { }
 
@@ -36,6 +39,16 @@ export class MainComponent implements OnInit {
     
     this.service.isEngRus
     .subscribe(data => this.engRus = data);
+
+    this.service.settings
+    .subscribe(data => {
+      const { id, controlMode, engRus, splitMode } = data;
+      
+      this.service.setControlMode(controlMode);
+      this.service.setEngRus(engRus);
+      this.service.setSplitMode(splitMode);
+      this.service.setAllPermissions(true);// add this to db
+    });
   }
 
   public changeTraining(value): void {
@@ -45,6 +58,14 @@ export class MainComponent implements OnInit {
 
   public getMode(value): void {
     this.service.setControlMode(value);
+  }
+
+  public allWordsDone(value: boolean): void {
+    this.wordsDone = value;
+  }
+
+  public getErrors(value: number): void {
+    this.errors = value;
   }
 
 }

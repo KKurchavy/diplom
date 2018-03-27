@@ -23,6 +23,7 @@ export class AppService {
   private _controlMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);//false - education, true - control
   private _splitMode: BehaviorSubject<string> = new BehaviorSubject<string>('');
   private _loadingWindow: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private _allPermissions: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
 
   //private _words: BehaviorSubject<any[]>; = new BehaviorSubject<any[]>([
@@ -35,9 +36,7 @@ export class AppService {
 
   constructor(
     private http: HttpClient
-  ) {
-
-  }
+  ) { }
 
   get isLogged(): Observable<boolean> {
     return this._isLogged.asObservable();
@@ -51,6 +50,9 @@ export class AppService {
   get user(): any {
     return this._user;
   }
+  get allPermissions(): Observable<boolean> {
+    return this._allPermissions.asObservable();
+  }
   get loadingWindow(): Observable<boolean> {
     return this._loadingWindow.asObservable();
   }
@@ -58,27 +60,34 @@ export class AppService {
     return this.http.get<WordResponse>(`${this.url}/controlwords`)
               .map(({words}) => words.map((item) => ({...item, done: false})));
   }
+  get settings(): Observable<any> {
+    return this.http.get<any>(`${this.url}/settings`);
+  }
   get splitMode(): Observable<string> {
     return this._splitMode.asObservable();
   }
 
-  get controlMode() {
+  get controlMode(): Observable<boolean> {
     return this._controlMode.asObservable();
   }
 
   public changeLoadingWindowState(value: boolean): void {
     this._loadingWindow.next(value);
   }
-  public setEngRus(value: boolean) {
+  public setEngRus(value: boolean): void {
     this._isEngRus.next(value);
   }
 
-  public setControlMode(value: boolean) {
+  public setControlMode(value: boolean): void {
     this._controlMode.next(value);
   }
 
-  public setSplitMode(value: string) {
+  public setSplitMode(value: string): void {
     this._splitMode.next(value);
+  }
+
+  public setAllPermissions(value: boolean): void {
+    this._allPermissions.next(value);
   }
 
   public login(user: Student) {
