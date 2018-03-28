@@ -54,8 +54,8 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
     this.controlMode$ = this.adminService.controlMode;
     this.allPermissions$ = this.adminService.allPermissions;
-    this.splitMode$ = this.service.splitMode;
     this.engRus$ = this.service.isEngRus;
+    this.splitMode$ = this.service.splitMode;
     this.words$ = this.adminService.words;
     
     this.words$
