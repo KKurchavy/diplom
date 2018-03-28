@@ -1,3 +1,4 @@
+import { RouterModule, Routes } from '@angular/router';
 import { AppLanguageModeModule } from './../../app-language-mode/app-language-mode.module';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,6 +14,10 @@ import { AdminComponent } from './admin/admin.component';
 import { MatListModule } from '@angular/material/list';
 import { ReactiveFormsModule } from '@angular/forms';
 
+const routes: Routes = [
+  { path: '', component: AdminComponent }
+];
+
 @NgModule({
   imports: [
     CommonModule,
@@ -25,10 +30,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatButtonModule,
     MatInputModule,
     ReactiveFormsModule,
-    AppLanguageModeModule
+    AppLanguageModeModule,
+    RouterModule.forChild(routes)
   ],
-  providers: [AppAdminService, DragulaService],
+  providers: [DragulaService],
   declarations: [AdminComponent],
-  exports: [AdminComponent]
+  exports: [AdminComponent, RouterModule]
 })
 export class AppAdminModule { }

@@ -9,10 +9,11 @@
         </a>
     </mat-toolbar-row>
     <mat-toolbar-row class="secondary">
-        <a mat-button (click)="changeMode(false)">Обучающий режим</a>
-        <a mat-button (click)="changeMode(true)">Ружим контроля</a>
+        <a mat-button [class.active]="!getControlMode" *ngIf="(!allPermissions && !getControlMode) || allPermissions" (click)="changeMode(false)">Обучающий режим</a>
+        <a mat-button [class.active]="getControlMode" *ngIf="(!allPermissions && getControlMode) || allPermissions" (click)="changeMode(true)">Режим контроля</a>
         <div class="flex-spacer"></div>
         <a *ngIf="(isAdmin$ | async) && inAdminPanel" mat-button (click)="true">Пополнить словарь</a>
         <a *ngIf="(isAdmin$ | async) && inAdminPanel" mat-button (click)="true">Статистика</a>
+        <a *ngIf="(isAdmin$ | async) && inAdminPanel" [class.active]="!allPermissions" mat-button (click)="setAllPermissions()">Контрольная</a>
     </mat-toolbar-row>
 </mat-toolbar>

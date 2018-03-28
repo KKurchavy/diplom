@@ -1,5 +1,5 @@
 import { AppService } from './../../app.service';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'app-language-mode',
@@ -7,6 +7,9 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./language-mode.component.scss']
 })
 export class LanguageModeComponent {
+
+  @Input() allPermissions: boolean;
+  @Input() engRus: boolean;
 
   @Output() changeLanguage: EventEmitter<boolean> = new EventEmitter<boolean>();
 

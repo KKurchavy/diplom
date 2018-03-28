@@ -17,6 +17,7 @@ export class MainComponent implements OnInit {
   public words$: Observable<Word[]>;
   public engRus: boolean;
   public controlMode$: Observable<boolean>;
+  public allPermissions$: Observable<boolean>;
   
   public wordsDone: boolean = false;
   public errors: number = 0;
@@ -24,6 +25,7 @@ export class MainComponent implements OnInit {
   constructor(private service: AppService) { }
 
   ngOnInit() {
+    
     this.service.splitMode
     .subscribe(data => this.splitMode = data);
 
@@ -36,18 +38,21 @@ export class MainComponent implements OnInit {
     .take(1);
 
     this.controlMode$ = this.service.controlMode;
+    this.allPermissions$ = this.service.allPermissions;
     
     this.service.isEngRus
     .subscribe(data => this.engRus = data);
 
     this.service.settings
     .subscribe(data => {
-      const { id, controlMode, engRus, splitMode } = data;
-      
+      const { id, controlMode, engRus, splitMode, allPermissions } = data;
+
       this.service.setControlMode(controlMode);
       this.service.setEngRus(engRus);
       this.service.setSplitMode(splitMode);
-      this.service.setAllPermissions(true);// add this to db
+      this.service.setAllPermissions(allPermissions);
+
+      this.service.changeLoadingWindowState(false);
     });
   }
 

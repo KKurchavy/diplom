@@ -12,13 +12,26 @@ import { Component, OnInit, ElementRef, ViewChild, Renderer2 } from '@angular/co
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
 })
+// let current;
+// this.service.changeLoadingWindowState(true);
+
+// return this.adminService.settings
+// .switchMap((data) => {
+//   current = data.allPermissions;
+//   return this.adminService.sendSettings('allPermissions', !current);
+// })
+// .finally(() => this.service.changeLoadingWindowState(false));
 export class AdminComponent implements OnInit {
 
   private words$: Observable<Word[]>;
   
   public controlMode$: Observable<boolean>;
+  public allPermissions$: Observable<boolean>;
+  public splitMode$: Observable<string>;
+  public engRus$: Observable<boolean>;
   public words: Word[];
   public controlWords: Word[];
+  
 
   public addWordFlag: boolean = false;
   public removeWordFlag: boolean = false;
@@ -40,6 +53,9 @@ export class AdminComponent implements OnInit {
 
   ngOnInit() {
     this.controlMode$ = this.adminService.controlMode;
+    this.allPermissions$ = this.adminService.allPermissions;
+    this.splitMode$ = this.service.splitMode;
+    this.engRus$ = this.service.isEngRus;
     this.words$ = this.adminService.words;
     
     this.words$
@@ -55,34 +71,48 @@ export class AdminComponent implements OnInit {
     });
   }
 
+  public getAllPermissions(value): void {
+    this.service.changeLoadingWindowState(true);
+
+    this.adminService.sendSettings('allPermissions', value)
+    .finally(() => {
+      this.service.setAllPermissions(value);
+      this.service.changeLoadingWindowState(false);
+    })
+    .subscribe(data => console.log(data));
+  }
+
   public getMode(value): void {
     this.service.changeLoadingWindowState(true);
+
     this.adminService.sendSettings('controlMode', value)
-    .subscribe(data => {
-        console.log(data);
-        this.service.changeLoadingWindowState(false);
-      });
-    this.adminService.setControlMode(value);
+    .finally(() => {
+      this.service.setControlMode(value);
+      this.service.changeLoadingWindowState(false);
+    })
+    .subscribe(data => console.log(data));
   }
 
   public getLang(value): void {
     this.service.changeLoadingWindowState(true);
+
     this.adminService.sendSettings('engRus', value)
-    .subscribe(data => {
-        console.log(data);
-        this.service.changeLoadingWindowState(false);
-      });
-    this.adminService.setControlMode(value);
+    .finally(() => {
+      this.service.setEngRus(value);
+      this.service.changeLoadingWindowState(false);
+    })
+    .subscribe(data => console.log(data));
   }
 
   public getSplit(value): void {
     this.service.changeLoadingWindowState(true);
+
     this.adminService.sendSettings('splitMode', value)
-    .subscribe(data => {
-        console.log(data);
-        this.service.changeLoadingWindowState(false);
-      });
-    this.service.setControlMode(value);
+    .finally(() => {
+      this.service.setSplitMode(value);
+      this.service.changeLoadingWindowState(false);
+    })
+    .subscribe(data => console.log(data));   
   }
 
   public addWord(): void {
@@ -101,6 +131,8 @@ export class AdminComponent implements OnInit {
       })
       .subscribe(data => {
         console.log(data);
+        const { word } = data;
+        this.words.push(word);
         this.service.changeLoadingWindowState(false);
       });
     }

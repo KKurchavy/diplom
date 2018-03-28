@@ -4,8 +4,12 @@ import { AppBodyModule } from './../app-body/app-body.module';
 import { AppLeftMenuModule } from './../app-left-menu/app-left-menu.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from "@angular/router";
 import { MainComponent } from './main/main.component';
+import { Routes, RouterModule } from '@angular/router';
+
+const routes: Routes = [
+  { path: '', component: MainComponent }
+];
 
 @NgModule({
   imports: [
@@ -13,9 +17,10 @@ import { MainComponent } from './main/main.component';
     AppLeftMenuModule,
     AppBodyModule,
     AppNavModule,
-    AppCongradilationsModule
+    AppCongradilationsModule,
+    RouterModule.forChild(routes)
   ],
   declarations: [MainComponent],
-  exports: [MainComponent]
+  exports: [MainComponent, RouterModule]
 })
 export class AppMainModule { }

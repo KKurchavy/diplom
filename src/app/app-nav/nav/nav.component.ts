@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs/Observable';
+import { AppAdminService } from './../../admin/app-admin.service';
 import { Router } from '@angular/router';
 import { AppService } from './../../app.service';
 import { AuthComponent } from './../../app-auth/auth/auth.component';
@@ -14,12 +16,15 @@ export class NavComponent {
   
   @Input() getControlMode: boolean;
   @Input() inAdminPanel: boolean = false;
+  @Input() allPermissions: boolean;
 
   @Output() sendControlMode: EventEmitter<boolean> = new EventEmitter<boolean>(this.getControlMode);
+  @Output() sendAllPermissions: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
     private service: AppService,
-    private router: Router
+    private router: Router,
+    private adminService: AppAdminService
   ) { }
 
   public changeMode(value: boolean): void {
@@ -35,5 +40,9 @@ export class NavComponent {
   }
   public goToDashboard(): void {
     this.router.navigate(['/dashboard']);
+  }
+  public setAllPermissions(): void {
+    console.log(this.allPermissions);
+    this.sendAllPermissions.emit(!this.allPermissions);
   }
 }

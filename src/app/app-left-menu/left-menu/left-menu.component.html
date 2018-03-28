@@ -1,3 +1,4 @@
 <mat-nav-list role="list">
-  <a mat-list-item *ngFor="let item of mods" (click)="sendMode(item.f)">{{item.name}}</a>
+    <a mat-list-item [class.active]="!splitMode" *ngIf="(!allPermissions && !splitMode) || allPermissions" (click)="sendMode('')">По буквам</a>
+    <a mat-list-item [class.active]="splitMode" *ngIf="(!allPermissions && splitMode) || allPermissions" (click)="sendMode(' ')">По словам</a>
 </mat-nav-list>

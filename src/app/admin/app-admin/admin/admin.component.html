@@ -1,14 +1,26 @@
 <app-nav 
-[getControlMode]="controlMode$ | async" 
+[getControlMode]="controlMode$ | async"
+[allPermissions]="allPermissions$ | async"
 (sendControlMode)="getMode($event)"
+(sendAllPermissions)="getAllPermissions($event)"
 [inAdminPanel]="true"
 >
 </app-nav>
 <div class="block-size">
-    <app-left-menu (changeMode)="getSplit($event)"></app-left-menu>
+    <app-left-menu 
+    [splitMode]="splitMode$ | async"
+    [allPermissions]="allPermissions$ | async"
+    (changeMode)="getSplit($event)"
+    >
+    </app-left-menu>
     
     <mat-card class="card">
-      <app-language-mode (changeLanguage)="getLang($event)"></app-language-mode>
+      <app-language-mode 
+      [engRus]="engRus$ | async"
+      [allPermissions]="allPermissions$ | async"
+      (changeLanguage)="getLang($event)"
+      >
+      </app-language-mode>
       <mat-card-title>
         <div>
             <button mat-button (click)="addWord()">Добавить элемент</button>
@@ -29,7 +41,7 @@
       </mat-card-title>
       <mat-card-content>
         <span class="lists-place">
-            <mat-list 
+            <mat-list
             class="list list-left"
             dragula="second-bag"
             [dragulaOptions]="{ revertOnSpill: true }"

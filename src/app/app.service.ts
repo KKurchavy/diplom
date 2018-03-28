@@ -61,7 +61,7 @@ export class AppService {
               .map(({words}) => words.map((item) => ({...item, done: false})));
   }
   get settings(): Observable<any> {
-    return this.http.get<any>(`${this.url}/settings`);
+    return this.http.get<any>(`${this.url}/admin/settings`);
   }
   get splitMode(): Observable<string> {
     return this._splitMode.asObservable();
@@ -92,23 +92,25 @@ export class AppService {
 
   public login(user: Student) {
     this._user = user;
-    this._isLogged.next(true);
+  }
+
+  public setLogged(student: boolean, admin?: boolean): void {
+    this._isLogged.next(student);
+    this._isAdmin.next(admin);
   }
 
   public loginAdmin(user: Admin): Observable<any> {
     this._user = user;
-    this._isLogged.next(true);
-    this._isAdmin.next(true);
 
     return this.http.post(`${this.url}/login`, {
       username: 'admin@admin.com',//`${user.firstName}_${user.lastName}`,
       password: 'admin'//user.password
     })
-    // .switchMap((data: JWTResponse) => {
-    //   console.log(data);
-    //   localStorage.setItem('access_token', data.token);
-    //   return this.http.get(`${this.url}/admin/hello`);
-    // });
+    .switchMap((data: JWTResponse) => {
+      console.log(data);
+      localStorage.setItem('access_token', data.token);
+      return this.http.get(`${this.url}/admin/hello`);
+    });
   }
 
   public logout() {
@@ -117,7 +119,7 @@ export class AppService {
   }
 
   public loadSettings() {
-    this.http.get(`${this.url}/settings`)
+    this.http.get(`${this.url}/admin/settings`)
     .subscribe(settings => console.log(settings));
   }
 }

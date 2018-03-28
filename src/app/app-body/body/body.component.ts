@@ -33,6 +33,7 @@ export class BodyComponent implements OnInit {
   @Input() splitMode: string;
   @Input() engRus: boolean;
   @Input() controlMode: boolean;
+  @Input() allPermissions: boolean;
 
   @Output() private sendStat: EventEmitter<any[]> = new EventEmitter<any[]>();
   @Output() private allWordsDone: EventEmitter<boolean> = new EventEmitter<boolean>(false);

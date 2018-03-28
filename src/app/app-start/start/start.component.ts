@@ -5,6 +5,8 @@ import { AppService } from './../../app.service';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import 'rxjs/add/operator/finally';
+
 
 @Component({
   selector: 'app-start',
@@ -35,6 +37,7 @@ export class StartComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
         this.service.login(result);
+        this.service.setLogged(true);
         this.router.navigate(['/dashboard']);
       }
     });
@@ -54,8 +57,8 @@ export class StartComponent implements OnInit {
           this.service.loginAdmin(admin)
           .subscribe(data => {
             console.log(data);
+            this.service.setLogged(true, true);
             this.router.navigate(['/dashboard']);
-            this.service.changeLoadingWindowState(false);
           });
         } else {
           this.snackBar.open('Неправильный пароль', 'Ок', {
