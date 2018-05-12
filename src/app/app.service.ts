@@ -61,7 +61,7 @@ export class AppService {
               .map(({words}) => words.map((item) => ({...item, done: false})));
   }
   get settings(): Observable<any> {
-    return this.http.get<any>(`${this.url}/admin/settings`);
+    return this.http.get<any>(`${this.url}/settings`);
   }
   get splitMode(): Observable<string> {
     return this._splitMode.asObservable();
@@ -119,7 +119,7 @@ export class AppService {
   }
 
   public loadSettings() {
-    this.http.get(`${this.url}/admin/settings`)
+    this.http.get(`${this.url}/settings`)
     .subscribe(settings => console.log(settings));
   }
 }

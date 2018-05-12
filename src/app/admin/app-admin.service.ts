@@ -31,12 +31,12 @@ export class AppAdminService {
     return this._allPermissions;
   }
   get words(): Observable<Word[]> {
-    return this.http.get<WordResponse>('http://localhost:3130/words')
+    return this.http.get<WordResponse>('http://localhost:3130/admin/words')
             .map(({ words }) => words);
   }
 
   get settings(): Observable<any> {
-    return this.http.get('http://localhost:3130/admin/settings');
+    return this.http.get('http://localhost:3130/settings');
   }
 
   public sendSettings(key: string, value: any): Observable<any> {
@@ -48,31 +48,31 @@ export class AppAdminService {
   }
 
   public addWord(word: Word): Observable<any> {
-    return this.http.post('http://localhost:3130/word', word);
+    return this.http.post('http://localhost:3130/admin/word', word);
   }
 
   public getWord(id: string): Observable<Word> {
-    return this.http.get<Word>(`http://localhost:3130/word/${id}`);
+    return this.http.get<Word>(`http://localhost:3130/admin/word/${id}`);
   }
 
   public addControlWord(item: any): Observable<any> {
     const { response } = item;
     
-    return this.http.post('http://localhost:3130/controlwords', {
+    return this.http.post('http://localhost:3130/admin/controlwords', {
       word: response.word,
       translation: response.translation
     });
   }
 
   public removeWord(id: string): Observable<any> {
-    return this.http.delete(`http://localhost:3130/word/${id}`);
+    return this.http.delete(`http://localhost:3130/admin/word/${id}`);
   }
 
   public removeControlWord(id: string): Observable<any> {
-    return this.http.delete(`http://localhost:3130/controlwords/${id}`);
+    return this.http.delete(`http://localhost:3130/admin/controlwords/${id}`);
   }
 
   public addWordToControlList(word: Word): Observable<any> {
-    return this.http.post('http://localhost:3130/controlwords', word);
+    return this.http.post('http://localhost:3130/admin/controlwords', word);
   }
 }

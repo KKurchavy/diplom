@@ -15,7 +15,7 @@ import 'rxjs/add/operator/finally';
 })
 export class StartComponent implements OnInit {
 
-  public projectName = 'Diploma';
+  public projectName = 'VsuLingvo';
   public isLogged$ = this.service.isLogged;
 
   constructor(
@@ -34,7 +34,9 @@ export class StartComponent implements OnInit {
       width: '350px'
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed()
+      .finally(() => this.service.changeLoadingWindowState(true))
+      .subscribe(result => {
       if(result) {
         this.service.login(result);
         this.service.setLogged(true);
@@ -47,13 +49,13 @@ export class StartComponent implements OnInit {
       width: '350px'
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed()
+      .finally(() => this.service.changeLoadingWindowState(true))
+      .subscribe(result => {
       if(result) {
         const admin = new Admin(result.firstName, result.lastName, result.password);
 
         if(admin.checkPassword()) {
-          this.service.changeLoadingWindowState(true);
-
           this.service.loginAdmin(admin)
           .subscribe(data => {
             console.log(data);

@@ -21,7 +21,7 @@
     height: 300px;
 }
 .drop-place {
-    background-color: #e8e8e8;
+    background-color: rgba(0,0,0, 0.3);
     min-height: 46px;
     display: inline-block;
     margin-bottom: 5vh;
@@ -30,7 +30,7 @@
     min-height: 46px;
     text-align: center;
     * {
-        background-color: #e8e8e8;
+        background-color: rgba(0,0,0, 0.3);
         margin: 2px 5px;
     }
 }

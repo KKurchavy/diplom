@@ -4,6 +4,8 @@ import { Observable } from 'rxjs/Observable';
 import { from } from 'rxjs/observable/from';
 import { AppService } from './../../app.service';
 import { Component, OnInit } from '@angular/core';
+import { Admin } from '../../data/admin';
+import { Student } from '../../data/student';
 
 @Component({
   selector: 'app-main',
@@ -44,6 +46,7 @@ export class MainComponent implements OnInit {
     .subscribe(data => this.engRus = data);
 
     this.service.settings
+    .finally(() => this.service.changeLoadingWindowState(false))
     .subscribe(data => {
       const { id, controlMode, engRus, splitMode, allPermissions } = data;
 
@@ -51,8 +54,6 @@ export class MainComponent implements OnInit {
       this.service.setEngRus(engRus);
       this.service.setSplitMode(splitMode);
       this.service.setAllPermissions(allPermissions);
-
-      this.service.changeLoadingWindowState(false);
     });
   }
 
@@ -71,6 +72,10 @@ export class MainComponent implements OnInit {
 
   public getErrors(value: number): void {
     this.errors = value;
+  }
+
+  public getResult(): any {
+    return {...this.service.user, errors: this.errors};
   }
 
 }

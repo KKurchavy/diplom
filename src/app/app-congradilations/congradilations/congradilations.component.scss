@@ -9,3 +9,8 @@
 .stat {
     font-size: 4vh;
 }
+.card-size {
+    flex-grow: 6;
+    display: flex;
+    flex-direction: column;
+}
