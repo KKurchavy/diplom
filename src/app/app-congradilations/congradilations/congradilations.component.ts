@@ -1,18 +1,20 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { AppService } from '../../app.service';
 
 @Component({
   selector: 'app-congradilations',
   templateUrl: './congradilations.component.html',
   styleUrls: ['./congradilations.component.scss']
 })
-export class CongradilationsComponent implements OnChanges {
+export class CongradilationsComponent implements OnInit {
 
   @Input() info: any;
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    if(changes) {
-      console.log(changes.info);
-    }
+  constructor(private service: AppService) {
+  }
+
+  public ngOnInit(): void {
+    this.service.sendStatistic(this.service.user, {});
   }
 
 }

@@ -99,6 +99,14 @@ export class AppService {
     this._isAdmin.next(admin);
   }
 
+  public sendStatistic(student: Student, value: any): void {
+    this.http.post(`${this.url}/statistics/5adc52ae9e41e9112c3c1de3`, {rofl: 'tut bil yan'})
+      .subscribe(d => console.log(d));
+    this.http.get(`${this.url}/statistics`)
+      .subscribe(d => console.log(d));
+    console.log(student);
+  }
+
   public loginAdmin(user: Admin): Observable<any> {
     this._user = user;
 
