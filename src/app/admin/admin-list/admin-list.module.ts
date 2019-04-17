@@ -1,8 +1,7 @@
-import { DragulaModule } from 'ng2-dragula';
-import { MatInputModule } from '@angular/material/input';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
+import { DragulaModule } from 'ng2-dragula';
 import { AdminListComponent } from './admin-list/admin-list.component';
 
 @NgModule({

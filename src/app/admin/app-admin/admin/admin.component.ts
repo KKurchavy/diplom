@@ -1,11 +1,10 @@
-import { AppService } from './../../../app.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatListModule } from '@angular/material/list';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DragulaService } from 'ng2-dragula';
+import { Observable } from 'rxjs/Observable';
+import { AppService } from './../../../app.service';
 import { Word } from './../../../data/word.interface';
 import { AppAdminService } from './../../app-admin.service';
-import { Observable } from 'rxjs/Observable';
-import { Component, OnInit, ElementRef, ViewChild, Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-admin',
@@ -122,9 +121,9 @@ export class AdminComponent implements OnInit {
   public submitNewWord(): void {
     const eng = this.fg.get('word');
     const rus = this.fg.get('translation');
-    this.service.changeLoadingWindowState(true);
 
-    if(eng.valid && rus.valid) {
+    if (eng.valid && rus.valid) {
+      this.service.changeLoadingWindowState(true);
       this.adminService.addWord({
         word: eng.value,
         translation: rus.value
@@ -136,8 +135,6 @@ export class AdminComponent implements OnInit {
         this.service.changeLoadingWindowState(false);
       });
     }
-
-    
   }
 
   public removeWord(): void {
@@ -151,7 +148,7 @@ export class AdminComponent implements OnInit {
   private onDrop(args): void {
     const [e, el, container, prevEl] = args;
     
-    if(this.droppableList && (el == this.droppableList.nativeElement)) {
+    if (this.droppableList && (el == this.droppableList.nativeElement)) {
       this.service.changeLoadingWindowState(true);
 
       this.adminService.getWord(e.value)
@@ -164,10 +161,10 @@ export class AdminComponent implements OnInit {
       });
     }
 
-    if(this.removeBlock && (el === this.removeBlock.nativeElement)) {
+    if (this.removeBlock && (el === this.removeBlock.nativeElement)) {
       this.service.changeLoadingWindowState(true);
 
-      if(container === this.droppableList.nativeElement) {
+      if (container === this.droppableList.nativeElement) {
         this.adminService.removeControlWord(e.value)
         .subscribe(data => {
           console.log(data);

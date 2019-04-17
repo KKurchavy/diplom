@@ -1,7 +1,7 @@
 import { User } from "./user";
 
 export class Admin extends User {
-    private _passwordAjax: string = 'admin';
+    private _passwordAjax: string = '1111';
     private _password: string;
 
     constructor(firstName, lastName, password) {

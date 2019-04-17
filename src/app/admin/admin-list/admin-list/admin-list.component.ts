@@ -1,5 +1,5 @@
+import { Component, Input, OnInit } from '@angular/core';
 import { Word } from './../../../data/word.interface';
-import { Component, OnInit, Input, SimpleChange } from '@angular/core';
 
 @Component({
   selector: 'app-admin-list',

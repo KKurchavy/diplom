@@ -1,16 +1,10 @@
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Component, EventEmitter, Input, OnInit, Output, QueryList, Renderer2, SimpleChanges, ViewChildren } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
-import { QueryList, Input, EventEmitter, Output, SimpleChanges } from '@angular/core';
-import { PlaceDirective } from './../place.directive';
+import { DragulaService } from 'ng2-dragula';
+import 'rxjs/add/operator/take';
 import { CutWord } from './../../data/cut-word';
 import { Word } from './../../data/word.interface';
-import { Observable } from 'rxjs/Observable';
-import { AppService } from './../../app.service';
-import 'rxjs/add/operator/take';
-import { from } from 'rxjs/observable/from';
-import { Component, OnInit, ChangeDetectionStrategy, ElementRef, ViewChildren } from '@angular/core';
-import { DragulaService } from 'ng2-dragula';
-import { Renderer2 } from '@angular/core';
+import { PlaceDirective } from './../place.directive';
 
 @Component({
   selector: 'app-body',
@@ -67,10 +61,10 @@ export class BodyComponent implements OnInit {
     if ((splitMode || controlMode) && this.word) {
       this.redraw();
     }
-    if(word && word.currentValue) {
+    if (word && word.currentValue) {
       this.redraw();
     }
-    if(words && !words.firstChange) {
+    if (words && !words.firstChange) {
       this.words.forEach((v) => {
         v.done = false;
       });
@@ -101,7 +95,7 @@ export class BodyComponent implements OnInit {
     let [e, el] = args;
     
     Array.from(el.children).forEach((v, i) => {
-      if(e == v) {
+      if (e == v) {
         this.swapIdx = i;
       }
     });
@@ -113,14 +107,14 @@ export class BodyComponent implements OnInit {
     const qlEl = this.dropableElList.find(({ element }) => element.nativeElement === el);
     const children = Array.from(el.children);
     
-    if((prevEl !== null || children.length > 1) && qlEl) {
+    if ((prevEl !== null || children.length > 1) && qlEl) {
       const tmp = prevEl === null ? children[0] : prevEl;
 
       this.swap(this.renderer, e, el, container, tmp);
     }
 
-    if(qlEl) {
-      if(!this.checkResult(el) && this.controlMode) {
+    if (qlEl) {
+      if (!this.checkResult(el) && this.controlMode) {
         this.renderer.setStyle(e, 'background-color', 'red');
         this.errors++;
 
@@ -147,16 +141,16 @@ export class BodyComponent implements OnInit {
     const arr = [];
 
     this.dropableElList.forEach(({ element: { nativeElement } }) => {
-      if(!nativeElement.classList.contains('empty')) {
+      if (!nativeElement.classList.contains('empty')) {
         const item = nativeElement.children.length > 0 ? nativeElement.children[0].value : '_';
         arr.push(item);
       }
 
     });
 
-    if(this.equal(arr, this.clearWord)) {
+    if (this.equal(arr, this.clearWord)) {
 
-      if(arr.join('') === this.clearWord.slice(0, arr.length).join('')) {
+      if (arr.join('') === this.clearWord.slice(0, arr.length).join('')) {
         this.snackBar.open('Правильно', 'Ок', {
           duration: 3000
         });
@@ -184,7 +178,7 @@ export class BodyComponent implements OnInit {
       return v.done === false;
     });
 
-    if(item) {
+    if (item) {
       return idx;
     } else {
       this.sendResults();
@@ -202,12 +196,12 @@ export class BodyComponent implements OnInit {
     let count = 0;
 
     arr1.forEach((v, i) => {
-      if(arr1[i] === arr2[i] || arr1[i] === '_') {
+      if (arr1[i] === arr2[i] || arr1[i] === '_') {
         count++;
       }
     });
 
-    if(count == arr1.length) {
+    if (count == arr1.length) {
       return true;
     }
     return false;
@@ -215,7 +209,7 @@ export class BodyComponent implements OnInit {
 
   private cutWordToArray(item: Word): CutWord {
     const [, word, translation, ] = Object.values(item).map(item => {
-     if(typeof item != 'boolean') {
+     if (typeof item != 'boolean') {
       return item.split(this.splitMode);
      } 
      return item;

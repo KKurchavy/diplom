@@ -5,6 +5,7 @@ import { Word } from './../data/word.interface';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { words } from '../mock/words';
 
 @Injectable()
 export class AppAdminService {
@@ -30,8 +31,13 @@ export class AppAdminService {
   get allPermissions(): Observable<boolean> {
     return this._allPermissions;
   }
+
+  /* get words(): Observable<Word[]> {
+    return new BehaviorSubject(words);
+  } */
+
   get words(): Observable<Word[]> {
-    return this.http.get<WordResponse>('http://localhost:3130/admin/words')
+    return this.http.get<WordResponse>('http://localhost:3130/words')
             .map(({ words }) => words);
   }
 
@@ -43,16 +49,20 @@ export class AppAdminService {
     return this.settings
       .switchMap(data => {
         data[key] = value;
-        return this.http.put('http://localhost:3130/admin/settings', data);
+        return this.http.put('http://localhost:3130/settings', data);
       });
   }
 
+  /* public addWord(word: Word): Observable<any> {
+    return new BehaviorSubject({ word });
+  } */
+
   public addWord(word: Word): Observable<any> {
-    return this.http.post('http://localhost:3130/admin/word', word);
+    return this.http.post('http://localhost:3130/word', word);
   }
 
   public getWord(id: string): Observable<Word> {
-    return this.http.get<Word>(`http://localhost:3130/admin/word/${id}`);
+    return this.http.get<Word>(`http://localhost:3130/word/${id}`);
   }
 
   public addControlWord(item: any): Observable<any> {
@@ -65,7 +75,7 @@ export class AppAdminService {
   }
 
   public removeWord(id: string): Observable<any> {
-    return this.http.delete(`http://localhost:3130/admin/word/${id}`);
+    return this.http.delete(`http://localhost:3130/word/${id}`);
   }
 
   public removeControlWord(id: string): Observable<any> {

@@ -17,18 +17,14 @@ export class AuthAdminComponent implements OnInit {
 
   ngOnInit() {
     this.authForm = this.fb.group({
-      firstName: 'Ян',
-      lastName: 'Кошелев',
-      password: 'admin'
+      firstName: 'Константин',
+      lastName: 'Курчавый',
+      password: '1111'
     })
   }
 
   public submitData(): void {
     this.dialogRef.close(this.authForm.value);
-  }
-
-  ngOnDestroy() {
-
   }
 
 }

@@ -1,7 +1,5 @@
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Word } from './../../data/word.interface';
-import { Observable } from 'rxjs/Observable';
-import { AppService } from './../../app.service';
-import { Component, Output, EventEmitter, Input, ChangeDetectionStrategy, SimpleChange } from '@angular/core';
 
 @Component({
   selector: 'app-body-menu',

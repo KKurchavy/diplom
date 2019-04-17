@@ -1,7 +1,6 @@
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import trainings from './../../data/trainings.array';
-import { AppService } from './../../app.service';
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 
 @Component({

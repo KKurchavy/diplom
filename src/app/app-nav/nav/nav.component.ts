@@ -1,10 +1,7 @@
-import { Observable } from 'rxjs/Observable';
-import { AppAdminService } from './../../admin/app-admin.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { AppAdminService } from './../../admin/app-admin.service';
 import { AppService } from './../../app.service';
-import { AuthComponent } from './../../app-auth/auth/auth.component';
-import { Component, OnInit, ViewChild, Inject, SimpleChanges, Output, EventEmitter, Input } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({
   selector: 'app-nav',

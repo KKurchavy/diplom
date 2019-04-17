@@ -1,12 +1,8 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
-import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material';
-import { ControlValueAccessor, FormBuilder, FormGroup } from '@angular/forms';
-import { from } from 'rxjs/observable/from';
-import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
-import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-auth',

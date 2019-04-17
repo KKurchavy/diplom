@@ -1,11 +1,8 @@
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Word } from './../../data/word.interface';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { from } from 'rxjs/observable/from';
 import { AppService } from './../../app.service';
-import { Component, OnInit } from '@angular/core';
-import { Admin } from '../../data/admin';
-import { Student } from '../../data/student';
+import { Word } from './../../data/word.interface';
 
 @Component({
   selector: 'app-main',
