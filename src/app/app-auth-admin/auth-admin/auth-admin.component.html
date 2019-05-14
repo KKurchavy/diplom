@@ -1,0 +1,13 @@
+<div class="app-auth-form" [formGroup]="authForm">
+  <mat-form-field class="app-auth-input">
+    <input formControlName="firstName" matInput type="text" placeholder="Введите имя">
+  </mat-form-field>
+  <mat-form-field class="app-auth-input">
+    <input formControlName="lastName" matInput type="text" placeholder="Введите фамилию">
+  </mat-form-field>
+  <mat-form-field class="app-auth-input">
+    <input formControlName="password" matInput type="password" placeholder="Введите Пароль">
+  </mat-form-field>
+
+  <a mat-button (click)="submitData()">Подтвердить</a>
+</div>

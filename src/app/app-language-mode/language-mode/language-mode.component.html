@@ -1,0 +1,18 @@
+<div class="lang">
+  <a
+    mat-raised-button
+    [class.active]="engRus"
+    *ngIf="(!allPermissions && engRus) || allPermissions"
+    color="primary"
+    (click)="changeLang(true)"
+    >Англо-Русский режим</a
+  >
+  <a
+    mat-raised-button
+    [class.active]="!engRus"
+    *ngIf="(!allPermissions && !engRus) || allPermissions"
+    color="primary"
+    (click)="changeLang(false)"
+    >Русско-Английский режим</a
+  >
+</div>

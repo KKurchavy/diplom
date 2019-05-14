@@ -1,0 +1,13 @@
+<div class="wrapper">
+  <mat-card class="card-size">
+    <mat-card-title>Отличная работа!</mat-card-title>
+    <mat-card-content>
+        <div class="stat">
+          <p>Имя: {{info?.firstName || 'Аноним'}}</p>
+          <p>Фамилия: {{info?.lastName || 'Аноним'}}</p>
+          <p>Группа: {{info?.groupNumber || null}}</p>
+          <p>Ошибок: {{info?.errors || 0}}</p>
+        </div>
+    </mat-card-content>
+  </mat-card>
+</div>

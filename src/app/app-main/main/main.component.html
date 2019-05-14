@@ -1,0 +1,26 @@
+<app-nav 
+[getControlMode]="controlMode$ | async"
+[allPermissions]="allPermissions$ | async"
+(sendControlMode)="getMode($event)"
+>
+</app-nav>
+<div class="wrapper" *ngIf="!wordsDone">
+    <app-left-menu
+    [splitMode]="splitMode"
+    [allPermissions]="allPermissions$ | async"
+    (changeMode)="changeTraining($event)"
+    >
+    </app-left-menu>
+    <app-body 
+    (allWordsDone)="allWordsDone($event)"
+    (resultErrors)="getErrors($event)"
+    [word]="word$ | async"
+    [splitMode]="splitMode"
+    [engRus]="engRus"
+    [words]="words$ | async"
+    [controlMode]="controlMode$ | async"
+    [allPermissions]="allPermissions$ | async"
+    >
+    </app-body>
+</div>
+<app-congradilations *ngIf="wordsDone" [info]="getResult()"></app-congradilations>

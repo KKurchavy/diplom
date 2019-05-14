@@ -1,0 +1,36 @@
+<mat-card class="card-size">
+  <mat-card-content>
+    <app-language-mode [engRus]="engRus" [allPermissions]="allPermissions">
+    </app-language-mode>
+  </mat-card-content>
+  <mat-card-content class="card-content-size">
+    <div class="words">
+      <div *ngIf="engRus">{{ word?.word }}</div>
+      <div>{{ word?.translation }}</div>
+    </div>
+  </mat-card-content>
+  <mat-card-content class="card-content-size">
+    <div>
+      <div class="drop-container">
+        <div class="drop-place">
+          <div class="place"
+               appPlace
+               [class.empty]="checkSpecialSymbols(item)"
+               dragula="first-bag"
+               *ngFor="let item of cutWord?.eng">
+            {{ checkSpecialSymbols(item) ? item : null }}
+          </div>
+        </div>
+      </div>
+      <div class="drag-place" dragula="first-bag">
+        <button mat-button
+                class="button"
+                *ngFor="let item of sortWord"
+                value="{{ item }}">
+          {{ item }}
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+<app-body-menu (getWord)="getWord($event)" [words]="words"></app-body-menu>
